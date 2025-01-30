@@ -24,9 +24,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigField("String", "BASE_URL", "\"${
-            localProperties.getProperty("baseUrl") ?: throw GradleException("baseUrl not found in local.properties")
-        }\"")
+        buildConfigField("String", "BASE_URL", "\"https://www.themealdb.com/\"")
     }
 
     buildTypes {
