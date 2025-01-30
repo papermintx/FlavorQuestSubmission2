@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">FlavorQuest</string>
+    <string name="instruction">Instructions</string>
+    <string name="ingredients_with_measure">Ingredients with Measures</string>
+    <string name="play_youtube_video">Play YouTube Video</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="add_favorite">Add to Favorite</string>
+    <string name="title_first">First</string>
+    <string name="dynamic_not_found">Dynamic feature not found</string>
+    <string name="ok">OK</string>
+    <string name="loading">Loading…</string>
+    <string name="thumbnail_of">Thumbnail of</string>
+    <string name="error">Error</string>
+    <string name="search">Search</string>
+    <string name="no_data">No Data</string>
+</resources>
