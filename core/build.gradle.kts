@@ -1,4 +1,4 @@
-import java.util.Properties
+//import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.library)
@@ -7,12 +7,12 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 
-val localProperties = Properties().apply {
-    val localPropertiesFile = rootProject.file("local.properties")
-    if (localPropertiesFile.exists()) {
-        load(localPropertiesFile.inputStream())
-    }
-}
+//val localProperties = Properties().apply {
+//    val localPropertiesFile = rootProject.file("local.properties")
+//    if (localPropertiesFile.exists()) {
+//        load(localPropertiesFile.inputStream())
+//    }
+//}
 
 android {
     namespace = "com.dicoding.core"

@@ -10,14 +10,14 @@ jobs:
       tag: api-35
     steps:
       - checkout
-      - restore_cache:
-          key: android-orb-v1-
       - run:
           name: Set up JDK 17
           command: |
             export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
             export PATH=$JAVA_HOME/bin:$PATH
             java -version
+      - restore_cache:
+          key: android-orb-v1-
       - run:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
