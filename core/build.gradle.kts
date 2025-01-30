@@ -56,9 +56,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.play.services.basement)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
+    testImplementation(libs.kotlinx.coroutines.test)
     // Dagger Hilt
     implementation(libs.dagger.hilt)
     ksp(libs.dagger.ksp)
@@ -80,5 +82,8 @@ dependencies {
     implementation(libs.room)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
+
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
 
 }
