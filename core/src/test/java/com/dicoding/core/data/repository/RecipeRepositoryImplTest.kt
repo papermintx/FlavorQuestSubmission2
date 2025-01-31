@@ -1,7 +1,6 @@
 package com.dicoding.core.data.repository
 
 import com.dicoding.core.data.remote.mapper.toDomain
-import com.dicoding.core.data.repository.RecipeRepositoryImpl
 import com.dicoding.core.domain.contract.source.LocalDataSource
 import com.dicoding.core.domain.contract.source.RemoteDataSource
 import com.dicoding.core.utils.MealDataGenerator
