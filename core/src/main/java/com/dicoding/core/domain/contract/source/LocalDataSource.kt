@@ -1,7 +1,7 @@
 package com.dicoding.core.domain.contract.source
 
-import com.dicoding.core.data.local.entity.MealEntity
-import com.dicoding.core.data.local.entity.MealFavoriteEntity
+import com.dicoding.core.data.local.room.entity.MealEntity
+import com.dicoding.core.data.local.room.entity.MealFavoriteEntity
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {

@@ -2,16 +2,38 @@
     <string name="app_name">FlavorQuest</string>
     <string name="instruction">Instructions</string>
     <string name="ingredients_with_measure">Ingredients with Measures</string>
-    <string name="play_youtube_video">Play YouTube Video</string>
     <string name="title_favorite">Favorite</string>
-    <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="add_favorite">Add to Favorite</string>
-    <string name="title_first">First</string>
     <string name="dynamic_not_found">Dynamic feature not found</string>
     <string name="ok">OK</string>
+    <string name="favorite">Favorite</string>
     <string name="loading">Loading…</string>
     <string name="thumbnail_of">Thumbnail of</string>
     <string name="error">Error</string>
     <string name="search">Search</string>
     <string name="no_data">No Data</string>
+    <string name="about_title">About this App</string>
+    <string name="about_description">
+        This app is a free recipe finder designed to help you discover new recipes from various cuisines around the world. Whether you\'re looking for breakfast ideas, lunch inspirations, or dinner recipes, this app has got you covered.
+    </string>
+    <string name="app_version">Version: 1.0.0</string>
+    <string name="developer_name">Developed by Muhamad Muslih</string>
+    <string name="about_features">
+        Features:
+        &#10;- Explore a variety of recipes.
+        &#10;- Save your favorite recipes.
+        &#10;- Share recipes with friends and family.
+        &#10;- Discover new cooking techniques and ingredients.
+    </string>
+    <string name="about_update_info">
+        This app is regularly updated with new recipes and improvements. Stay tuned for upcoming features and updates.
+    </string>
+    <string name="contact_support_button">Contact Support</string>
+    <string name="contact_support_email">
+        For any issues or questions, you can contact support via email: muhamadmuslih720@gmail.com
+    </string>
+    <string name="favorite_title">Favorite</string>
+    <string name="delete_button">Delete</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="drawer">Drawer</string>
 </resources>

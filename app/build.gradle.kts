@@ -22,11 +22,14 @@ android {
 
     buildTypes {
         release {
+            isMinifyEnabled = true
+            isDebuggable = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        debug {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            isDebuggable = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -76,5 +79,7 @@ dependencies {
 
     // Coil
     implementation(libs.coil.compose)
+
+    debugImplementation(libs.leakcanary.android)
 
 }

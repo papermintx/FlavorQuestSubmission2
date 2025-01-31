@@ -8,5 +8,7 @@ interface RemoteDataSource {
 
     fun searchRecipes(s: String): Flow<Result<MealsResponseDto>>
 
+    suspend fun getInitialMeal(): Result<List<MealsItemDto?>>
+
     fun getRecipeDetail(i: String): Flow<Result<MealsItemDto>>
 }

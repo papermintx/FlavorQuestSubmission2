@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,7 +24,7 @@ fun EmptyState() {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(
-                imageVector = Icons.Default.FavoriteBorder,
+                imageVector = Icons.Filled.Favorite,
                 contentDescription = "No Favorites",
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(64.dp)

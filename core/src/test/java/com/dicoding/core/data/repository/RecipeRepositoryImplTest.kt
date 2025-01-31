@@ -1,6 +1,7 @@
 package com.dicoding.core.data.repository
 
-import com.dicoding.core.data.mapper.toDomain
+import com.dicoding.core.data.remote.mapper.toDomain
+import com.dicoding.core.data.repository.RecipeRepositoryImpl
 import com.dicoding.core.domain.contract.source.LocalDataSource
 import com.dicoding.core.domain.contract.source.RemoteDataSource
 import com.dicoding.core.utils.MealDataGenerator
@@ -9,7 +10,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

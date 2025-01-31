@@ -53,7 +53,7 @@ fun MealItem(modifier: Modifier = Modifier, meal: Meal) {
             Column(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp, start = 4.dp, end = 4.dp).align(alignment = Alignment.BottomCenter)) {
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                        containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Column(
@@ -64,7 +64,7 @@ fun MealItem(modifier: Modifier = Modifier, meal: Meal) {
                             text = meal.name,
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface,
+                            color = MaterialTheme.colorScheme.onPrimary,
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
@@ -72,7 +72,7 @@ fun MealItem(modifier: Modifier = Modifier, meal: Meal) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Card(
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                        containerColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Column(
@@ -81,7 +81,7 @@ fun MealItem(modifier: Modifier = Modifier, meal: Meal) {
                         Text(
                             text = "${meal.category} - ${meal.area}",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f),
                             overflow = TextOverflow.Ellipsis,
                         )
                     }

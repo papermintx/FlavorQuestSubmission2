@@ -5,22 +5,27 @@ import com.dicoding.core.data.remote.ApiService
 import com.dicoding.core.data.remote.RemoteDataSourceImpl
 import com.dicoding.core.data.repository.RecipeRepositoryImpl
 import com.dicoding.core.domain.contract.repository.RecipeRepository
+import com.dicoding.core.domain.contract.repository.UserPreferencesRepository
 import com.dicoding.core.domain.contract.source.LocalDataSource
 import com.dicoding.core.domain.contract.source.RemoteDataSource
 import com.dicoding.core.domain.contract.usecase.DeleteMealFavoriteUseCase
 import com.dicoding.core.domain.contract.usecase.GetAllFavoriteUseCase
-import com.dicoding.core.domain.contract.usecase.GetAllMealInitial
+import com.dicoding.core.domain.contract.usecase.GetAllMealInitialUseCase
 import com.dicoding.core.domain.contract.usecase.GetMealDetailUseCase
+import com.dicoding.core.domain.contract.usecase.GetThemeModeUseCase
 import com.dicoding.core.domain.contract.usecase.InsertFavoriteMealUseCase
-import com.dicoding.core.domain.contract.usecase.InsertInitialMeal
+import com.dicoding.core.domain.contract.usecase.InsertInitialMealUseCase
 import com.dicoding.core.domain.contract.usecase.SearchMealUseCase
+import com.dicoding.core.domain.contract.usecase.UpdateThemeModeUseCase
 import com.dicoding.core.domain.usecase.DeleteMealFavoriteUseCaseImpl
 import com.dicoding.core.domain.usecase.GetAllFavoriteUseCaseImpl
-import com.dicoding.core.domain.usecase.GetAllInitialMealImpl
+import com.dicoding.core.domain.usecase.GetAllInitialMealImplUseCase
 import com.dicoding.core.domain.usecase.GetMealDetailUseCaseImpl
+import com.dicoding.core.domain.usecase.GetThemeModeUseCaseImpl
 import com.dicoding.core.domain.usecase.InsertFavoriteMealImpl
-import com.dicoding.core.domain.usecase.InsertInitialMealImpl
+import com.dicoding.core.domain.usecase.InsertInitialMealUseCaseImpl
 import com.dicoding.core.domain.usecase.SearchMealUseCaseImpl
+import com.dicoding.core.domain.usecase.UpdateThemeModeUseCaseImpl
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -102,14 +107,14 @@ object CoreModule {
 
     @Provides
     @Singleton
-    fun provideInsertInitialMealUseCase(recipeRepository: RecipeRepository): InsertInitialMeal {
-        return InsertInitialMealImpl(recipeRepository)
+    fun provideInsertInitialMealUseCase(recipeRepository: RecipeRepository): InsertInitialMealUseCase {
+        return InsertInitialMealUseCaseImpl(recipeRepository)
     }
 
     @Provides
     @Singleton
-    fun provideGetAllMealInitialUseCase(recipeRepository: RecipeRepository): GetAllMealInitial {
-        return GetAllInitialMealImpl(recipeRepository)
+    fun provideGetAllMealInitialUseCase(recipeRepository: RecipeRepository): GetAllMealInitialUseCase {
+        return GetAllInitialMealImplUseCase(recipeRepository)
     }
 
     @Provides
@@ -128,6 +133,18 @@ object CoreModule {
     @Singleton
     fun provideDeleteFavoriteUseCase(recipeRepository: RecipeRepository): DeleteMealFavoriteUseCase {
         return DeleteMealFavoriteUseCaseImpl(recipeRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetThemeModeUseCase(pref: UserPreferencesRepository): GetThemeModeUseCase {
+        return GetThemeModeUseCaseImpl(pref)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateThemeModeUseCase(pref: UserPreferencesRepository): UpdateThemeModeUseCase {
+        return UpdateThemeModeUseCaseImpl(pref)
     }
 
 }

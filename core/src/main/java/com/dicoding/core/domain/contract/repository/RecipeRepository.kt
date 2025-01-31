@@ -6,9 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
 
-    suspend fun searchRecipes(s: String) : Flow<List<Meal?>>
+    fun searchRecipes(s: String) : Flow<List<Meal?>>
 
     suspend fun insertMealToDatabase(meals: List<Meal>)
+
+    suspend fun getInitialMeal() : List<Meal?>
 
     fun getAllFavoriteMeal(): Flow<List<Meal?>>
 

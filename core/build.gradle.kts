@@ -56,8 +56,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.play.services.basement)
     testImplementation(libs.junit)
-    testImplementation(libs.junit.junit)
-    testImplementation(libs.junit.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.kotlinx.coroutines.test)
@@ -83,7 +81,21 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
 
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
+
+    // Mockito
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.inline)
+
+    // Security
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.secure.preferences.lib)
+    implementation(libs.tink.android)
+
+//    // Enkripsi Database
+    implementation(libs.android.database.sqlcipher)
+    implementation(libs.androidx.sqlite.ktx)
+
 
 }

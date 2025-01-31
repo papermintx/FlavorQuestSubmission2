@@ -20,6 +20,13 @@ class RemoteDataSourceImpl(
         }
     }
 
+    // saya tidak menggunakan flow karena ini hanya akan di panggil sekali ketika initial
+    // saya harap hal ini dapat di terima
+    override suspend fun getInitialMeal(): Result<List<MealsItemDto?> >{
+        val response = apiService.searchRecipes("")
+        return handleResponse(response) { it.meals }
+    }
+
     override fun getRecipeDetail(i: String): Flow<Result<MealsItemDto>> = flow {
         try {
             val response = apiService.getRecipeDetail(i)

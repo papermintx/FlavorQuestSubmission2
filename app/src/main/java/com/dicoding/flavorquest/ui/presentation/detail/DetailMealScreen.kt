@@ -37,7 +37,7 @@ import com.dicoding.flavorquest.ui.presentation.detail.components.YoutubePlay
 import com.dicoding.flavorquest.ui.presentation.detail.viewmodel.DetailEvent
 import com.dicoding.flavorquest.ui.presentation.detail.viewmodel.DetailMealViewModel
 import com.dicoding.flavorquest.ui.presentation.home.components.ErrorDialog
-import com.dicoding.flavorquest.ui.presentation.home.components.LoadingCard
+import com.dicoding.flavorquest.ui.presentation.home.components.LoadingDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -157,7 +157,7 @@ fun MealDetailScreen(
 
 
 
-            LoadingCard(isVisible = state.isLoading)
+            LoadingDialog(isVisible = state.isLoading)
 
             ErrorDialog(showDialog = state.error.first, errorMessage = state.error.second) {
                 viewmodel.onEvent(DetailEvent.ResetError)
