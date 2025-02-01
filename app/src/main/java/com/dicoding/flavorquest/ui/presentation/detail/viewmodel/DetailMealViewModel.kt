@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dicoding.core.common.State
-import com.dicoding.core.data.remote.mapper.toMeal
+import com.dicoding.core.data.mapper.toMeal
 import com.dicoding.core.domain.contract.usecase.GetMealDetailUseCase
 import com.dicoding.core.domain.contract.usecase.InsertFavoriteMealUseCase
 import com.dicoding.core.domain.model.Meal

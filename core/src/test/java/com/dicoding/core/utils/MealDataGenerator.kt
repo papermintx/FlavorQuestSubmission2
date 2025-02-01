@@ -2,18 +2,8 @@ package com.dicoding.core.utils
 
 import com.dicoding.core.data.remote.response.MealsItemDto
 import com.dicoding.core.data.remote.response.MealsResponseDto
-import com.dicoding.core.domain.model.Meal
 
 object MealDataGenerator {
-    fun generateDummyMeals(): List<Meal> {
-        return listOf(
-            Meal(id = "1", name = "Chicken Curry", category = "Chicken", thumbnail = "url1", area = "Indian"),
-            Meal(id = "2", name = "Beef Stew", category = "Beef", thumbnail = "url2", area = "American"),
-            Meal(id = "3", name = "Vegetable Stir Fry", category = "Vegetarian", thumbnail = "url3", area = "Chinese"),
-            Meal(id = "4", name = "Spaghetti Bolognese", category = "Pasta", thumbnail = "url4", area = "Italian"),
-            Meal(id = "5", name = "Fish Tacos", category = "Seafood", thumbnail = "url5", area = "Mexican")
-        )
-    }
 
     fun generateDummyMealDto(): MealsResponseDto {
         val meals = mutableListOf<MealsItemDto?>()

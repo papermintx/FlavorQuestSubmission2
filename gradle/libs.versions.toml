@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.3"
+coreTesting = "2.2.0"
 hiltCompiler = "1.2.0"
 hiltLifecycleViewmodel = "1.0.0-alpha03"
 kotlin = "2.0.21"
@@ -28,9 +29,12 @@ securityCrypto = "1.1.0-alpha06"
 tinkAndroid = "1.8.0"
 androidDatabaseSqlcipher = "4.5.4"
 sqliteKtx = "2.4.0"
+junitJunit = "4.12"
+lifecycleRuntimeTesting = "2.8.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }
 androidx-hilt-lifecycle-viewmodel = { module = "androidx.hilt:hilt-lifecycle-viewmodel", version.ref = "hiltLifecycleViewmodel" }
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
@@ -98,6 +102,8 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 # Enkripsi Database
 android-database-sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "androidDatabaseSqlcipher" }
 androidx-sqlite-ktx = { module = "androidx.sqlite:sqlite-ktx", version.ref = "sqliteKtx" }
+junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
+androidx-lifecycle-runtime-testing = { group = "androidx.lifecycle", name = "lifecycle-runtime-testing", version.ref = "lifecycleRuntimeTesting" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

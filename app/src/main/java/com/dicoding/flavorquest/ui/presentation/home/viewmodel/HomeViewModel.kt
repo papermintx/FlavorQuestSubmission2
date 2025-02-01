@@ -31,47 +31,6 @@ class HomeViewModel @Inject constructor(
         fetchInitialMeals()
     }
 
-    private fun fetchInitialMeals() {
-        job?.cancel()
-        job = viewModelScope.launch {
-            try {
-                Log.d(TAG, "Fetching initial meals...")
-                getAllInitialMealUseCase().collect { state ->
-                    Log.d(TAG, "Received state: $state")
-                    when (state) {
-                        is State.Loading -> {
-                            _searchState.update { it.copy(isLoading = true, error = Pair(false, "")) }
-                        }
-                        is State.Success -> {
-                            _searchState.update {
-                                it.copy(
-                                    isLoading = false,
-                                    data = state.data.filterNotNull(),
-                                    error = Pair(false, "")
-                                )
-                            }
-                        }
-                        is State.Error -> {
-                            _searchState.update { it.copy(isLoading = false, error = Pair(true, state.message)) }
-                        }
-                        State.Empty -> {
-                            _searchState.update {
-                                it.copy(
-                                    isLoading = false,
-                                    error = Pair(false, ""),
-                                    data = emptyList()
-                                )
-                            }
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "fetchInitialMeals: ${e.message}")
-                _searchState.update { it.copy(isLoading = false, error = Pair(true, e.message ?: "An error occurred")) }
-            }
-        }
-    }
-
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.Search -> {
@@ -81,9 +40,45 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.ResetError -> {
                 resetSearchError()
             }
+            is HomeEvent.FetchInitialMeals -> {
+                fetchInitialMeals()
+            }
         }
     }
 
+    private fun fetchInitialMeals() {
+        job?.cancel()
+        job = viewModelScope.launch {
+            getAllInitialMealUseCase().collect { state ->
+                when (state) {
+                    is State.Loading -> {
+                        _searchState.update { it.copy(isLoading = true, error = Pair(false, "")) }
+                    }
+                    is State.Success -> {
+                        _searchState.update {
+                            it.copy(
+                                isLoading = false,
+                                data = state.data.filterNotNull(),
+                                error = Pair(false, "")
+                            )
+                        }
+                    }
+                    is State.Error -> {
+                        _searchState.update { it.copy(isLoading = false, error = Pair(true, state.message)) }
+                    }
+                    State.Empty -> {
+                        _searchState.update {
+                            it.copy(
+                                isLoading = false,
+                                error = Pair(false, ""),
+                                data = emptyList()
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
     private fun resetSearchError() {
         _searchState.update { it.copy(error = Pair(false, "")) }
     }
@@ -91,7 +86,6 @@ class HomeViewModel @Inject constructor(
     private fun searchMeal(query: String) {
         job?.cancel()
         job = viewModelScope.launch {
-            Log.d(TAG, "searchMeal: $query")
             searchMealUseCase(query).collect { state ->
                 when (state) {
                     is State.Loading -> {

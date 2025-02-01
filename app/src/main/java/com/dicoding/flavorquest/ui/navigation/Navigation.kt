@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.dicoding.flavorquest.ui.presentation.about.AboutScreen
 import com.dicoding.flavorquest.ui.presentation.detail.MealDetailScreen
-import com.dicoding.flavorquest.ui.presentation.favorite.FavoriteViewModel
+import com.dicoding.flavorquest.ui.presentation.favorite.viewmodel.FavoriteViewModel
 import com.dicoding.flavorquest.ui.presentation.home.HomeScreen
 import com.dicoding.flavorquest.ui.presentation.settings.SettingScreen
 import com.dicoding.flavorquest.ui.presentation.splash.SplashScreen

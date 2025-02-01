@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.dicoding.core.data.local.room.Database
 import com.dicoding.core.data.local.room.LocalDataSourceImpl
 import com.dicoding.core.data.local.room.dao.MealDao
+import com.dicoding.core.data.local.room.dao.MealDetailDao
 import com.dicoding.core.data.local.room.dao.MealFavoriteDao
 import com.dicoding.core.domain.contract.source.LocalDataSource
 import dagger.Module
@@ -42,8 +43,12 @@ object LocalModule {
     fun provideMealFavoriteDao(database: Database): MealFavoriteDao = database.mealFavoriteDao()
 
     @Provides
+    fun provideMealDetailDao(database: Database) = database.mealDetailDao()
+
+    @Provides
     @Singleton
-    fun provideLocalDataSource(mealDao: MealDao, mealFavoriteDao: MealFavoriteDao): LocalDataSource{
-        return LocalDataSourceImpl(mealDao, mealFavoriteDao)
+    fun provideLocalDataSource(mealDao: MealDao, mealFavoriteDao: MealFavoriteDao, mealDetailDao: MealDetailDao): LocalDataSource{
+        return LocalDataSourceImpl(mealDao, mealFavoriteDao, mealDetailDao)
     }
+
 }

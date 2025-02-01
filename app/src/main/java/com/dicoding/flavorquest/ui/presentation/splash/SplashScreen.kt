@@ -18,15 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(modifier: Modifier = Modifier, viewModel: SplashViewModel = hiltViewModel(), goHome: () -> Unit) {
-
-    LaunchedEffect(Unit) {
-        viewModel.getMeal()
-    }
+fun SplashScreen(modifier: Modifier = Modifier, goHome: () -> Unit) {
 
     Box(
         modifier = modifier.fillMaxSize(),

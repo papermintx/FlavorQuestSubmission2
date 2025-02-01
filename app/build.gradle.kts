@@ -10,6 +10,7 @@ android {
     namespace = "com.dicoding.flavorquest"
     compileSdk = 35
 
+
     defaultConfig {
         applicationId = "com.dicoding.flavorquest"
         minSdk = 24
@@ -27,6 +28,8 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         debug {
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
             isMinifyEnabled = false
             isDebuggable = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -57,7 +60,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.feature.delivery.ktx)
+    implementation(libs.androidx.lifecycle.runtime.testing)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -81,5 +86,12 @@ dependencies {
     implementation(libs.coil.compose)
 
     debugImplementation(libs.leakcanary.android)
+
+    // For Test
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.core.testing)
+
 
 }

@@ -58,12 +58,16 @@ fun MealDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(state.data?.strMeal ?: "Detail Screen", style = MaterialTheme.typography.titleLarge) }
-                       , colors = TopAppBarDefaults.topAppBarColors(
+                title = {
+                    Text(
+                        state.data?.strMeal ?: "Detail Screen",
+                        style = MaterialTheme.typography.titleMedium,
+                        color =  MaterialTheme.colorScheme.onPrimary
+                    ) },
+                        colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primary
-                        )
+                    )
             )
-
         },
 
     ){ paddingValues ->

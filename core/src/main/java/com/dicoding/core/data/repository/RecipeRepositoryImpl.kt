@@ -1,124 +1,132 @@
 package com.dicoding.core.data.repository
 
 import android.util.Log
-import com.dicoding.core.data.remote.mapper.toDomain
-import com.dicoding.core.data.remote.mapper.toEntity
-import com.dicoding.core.data.remote.mapper.toFavoriteEntity
-import com.dicoding.core.data.remote.mapper.toMealDetail
+import com.dicoding.core.data.NetworkBoundResource
+import com.dicoding.core.data.Resource
+import com.dicoding.core.data.mapper.toDetailEntity
+import com.dicoding.core.data.mapper.toDomain
+import com.dicoding.core.data.mapper.toEntity
+import com.dicoding.core.data.mapper.toFavoriteEntity
+import com.dicoding.core.data.remote.response.MealsItemDto
 import com.dicoding.core.domain.contract.repository.RecipeRepository
 import com.dicoding.core.domain.contract.source.LocalDataSource
 import com.dicoding.core.domain.contract.source.RemoteDataSource
 import com.dicoding.core.domain.model.Meal
 import com.dicoding.core.domain.model.MealDetail
-import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import java.io.IOException
-import java.net.UnknownHostException
-import java.util.concurrent.TimeoutException
 
 class RecipeRepositoryImpl(
     private val remoteDataSourceImpl: RemoteDataSource,
     private val localDataSource: LocalDataSource
-): RecipeRepository {
+) : RecipeRepository {
+    private var currentQuery: String? = null
+    private var lastSuccessfulQuery: String? = null
 
-    override fun searchRecipes(s: String): Flow<List<Meal?>> =
-        remoteDataSourceImpl.searchRecipes(s)
-            .map { response ->
-                if (response.isSuccess) {
-                    val mealsResponseDto = response.getOrNull()
-                    if (mealsResponseDto != null) {
-                        mealsResponseDto.meals?.map { it?.toDomain() } ?: emptyList()
+    override fun searchRecipes(s: String): Flow<Resource<List<Meal?>>> {
+        return object : NetworkBoundResource<List<Meal?>, List<MealsItemDto>>() {
+
+            override suspend fun fetchFromNetwork(): Flow<List<MealsItemDto>> {
+                Log.d(TAG, "fetchFromNetwork: $s")
+                currentQuery = s // Set currentQuery ke query baru
+
+                return remoteDataSourceImpl.searchRecipes(s).map { response ->
+                    Log.d(TAG, "fetchFromNetwork: response: $response")
+                    if (response.isSuccess) {
+                        Log.d(TAG, "fetchFromNetwork: response: ${response.getOrNull()}")
+                        val data = response.getOrNull()
+                        data?.meals?.filterNotNull() ?: emptyList()
                     } else {
-                        Log.d(TAG, "searchRecipes: Data is empty")
-                        throw IllegalStateException("Data is empty")
-                    }
-                } else {
-                    Log.e(TAG, "searchRecipes: ${response.exceptionOrNull()}")
-                    throw response.exceptionOrNull() ?: Exception("An error occurred. Please try again.")
-                }
-            }
-            .catch { e ->
-                when (e) {
-                    is TimeoutCancellationException -> {
-                        Log.e(TAG, "searchRecipes: Request timed out", e)
-                        throw TimeoutException("Request timed out. Please try again.")
-                    }
-                    is UnknownHostException -> {
-                        Log.e(TAG, "searchRecipes: No internet connection", e)
-                        throw IOException("No internet connection. Please check your connection.")
-                    }
-                    is IOException -> {
-                        Log.e(TAG, "searchRecipes: IOException", e)
-                        throw IOException("An error occurred. Please try again.")
-                    }
-                    else -> {
-                        Log.e(TAG, "searchRecipes: Unexpected error", e)
-                        throw Exception(e.message)
+                        Log.e(TAG, "fetchFromNetwork: Error fetching data from network", response.exceptionOrNull())
+                        throw response.exceptionOrNull() ?: Exception("An error occurred. Please try again.")
                     }
                 }
             }
+
+            override suspend fun saveNetworkResult(item: List<MealsItemDto>) {
+                try {
+                    localDataSource.deleteAllMeals()
+                    localDataSource.insertMeals(item.map { it.toDomain().toEntity() })
+                    // Jika save berhasil, update lastSuccessfulQuery
+                    lastSuccessfulQuery = currentQuery
+                    Log.d(TAG, "saveNetworkResult: lastSuccessfulQuery updated to $lastSuccessfulQuery")
+                } catch (e: Exception) {
+                    Log.e(TAG, "saveNetworkResult: Error saving to DB", e)
+                    throw e
+                }
+            }
+
+            override fun loadFromDb(): Flow<List<Meal?>> {
+                return localDataSource.getAllMeals().map { entities ->
+                    Log.d(TAG, "loadFromDb: $entities")
+                    entities.map { it?.toDomain() }
+                }.catch { e ->
+                    Log.e(TAG, "loadFromDb: Error loading from DB", e)
+                    emit(emptyList())
+                }
+            }
+
+            override fun shouldFetch(data: List<Meal?>?): Boolean {
+                val shouldFetch = data.isNullOrEmpty() || s != lastSuccessfulQuery
+                Log.d(TAG, "shouldFetch: Data is null or empty = ${data.isNullOrEmpty()}, Query changed = ${s != lastSuccessfulQuery}")
+                return shouldFetch
+            }
+        }.asFlow()
+    }
 
     override suspend fun insertMealToDatabase(meals: List<Meal>) {
-        val mealsEntity = meals.map {
-            it.toEntity()
-        }
+        val mealsEntity = meals.map { it.toEntity() }
         localDataSource.insertMeals(mealsEntity)
     }
 
-    override suspend fun getInitialMeal(): List<Meal?> {
-        try {
-            val response = remoteDataSourceImpl.getInitialMeal()
-            if (response.isSuccess) {
-                val mealsResponseDto = response.getOrNull()
-
-                if (mealsResponseDto != null) {
-                    return mealsResponseDto.map { data ->
-                        data?.toDomain()
+    override fun getInitialMeal(): Flow<Resource<List<Meal?>>> {
+        return object : NetworkBoundResource<List<Meal?>, List<MealsItemDto>>() {
+            override suspend fun fetchFromNetwork(): Flow<List<MealsItemDto>> {
+                return remoteDataSourceImpl.getInitialMeal().map { response ->
+                    Log.d(TAG, "fetchFromNetwork: response: $response")
+                    if (response.isSuccess) {
+                        val data = response.getOrNull()
+                        Log.d(TAG, "fetchFromNetwork: data: $data")
+                        data?.filterNotNull() ?: throw IllegalStateException("Data is empty")
+                    } else {
+                        Log.e(TAG, "fetchFromNetwork: Error fetching data from network", response.exceptionOrNull())
+                        throw response.exceptionOrNull() ?: Exception("An error occurred. Please try again.")
                     }
-                } else {
-                    Log.d(TAG, "getInitialMeal: Data is empty")
-                    throw IllegalStateException("Data is empty")
                 }
-            } else {
-                Log.e(TAG, "getInitialMeal: ${response.exceptionOrNull()}")
-                throw response.exceptionOrNull() ?: throw Exception("An error occurred. Please try again.")
             }
-        } catch (e: TimeoutCancellationException) {
-            Log.e(TAG, "getInitialMeal: Request timed out", e)
-            throw TimeoutException("Request timed out. Please try again.")
-        } catch (e: UnknownHostException){
-            Log.e(TAG, "getInitialMeal: No internet connection", e)
-            throw IOException("No internet connection. Please check your connection.")
-        } catch (e: IOException) {
-            Log.e(TAG, "getInitialMeal: IOException", e)
-            throw IOException("An error occurred. Please try again.")
-        } catch (e: Exception) {
-            Log.e(TAG, "getInitialMeal: Unexpected error", e)
-            throw Exception(e.message)
-        }
+
+            override suspend fun saveNetworkResult(item: List<MealsItemDto>) {
+                try {
+                    localDataSource.insertMeals(item.map { it.toDomain().toEntity() })
+                } catch (e: Exception) {
+                    Log.e(TAG, "saveNetworkResult: Error saving to DB", e)
+                    throw e
+                }
+            }
+
+            override fun loadFromDb(): Flow<List<Meal?>> {
+                return localDataSource.getAllMeals().map { entities ->
+                    entities.map { it?.toDomain() }
+                }.catch {
+                    throw it
+                }
+            }
+
+            override fun shouldFetch(data: List<Meal?>?): Boolean {
+                // Fetch hanya jika data di database kosong
+                val shouldFetch = data.isNullOrEmpty()
+                Log.d(TAG, "shouldFetch: Data is null or empty = $shouldFetch")
+                return shouldFetch
+            }
+        }.asFlow()
     }
 
     override fun getAllFavoriteMeal(): Flow<List<Meal?>> {
         return localDataSource.getAllMealsFavorite().map { mealFavoriteEntities ->
-            mealFavoriteEntities.map { mealFavoriteEntity ->
-                mealFavoriteEntity?.toDomain()
-            }
-        }
-    }
-
-    override fun getAllInitialMeal(): Flow<List<Meal?>> {
-        return localDataSource.getAllMeals().map { mealEntities ->
-            if (mealEntities.isEmpty()) {
-                emptyList()
-            } else{
-                mealEntities.map { mealEntity ->
-                    mealEntity?.toDomain()
-                }
-            }
-
+            mealFavoriteEntities.map { it?.toDomain() }
         }
     }
 
@@ -126,38 +134,51 @@ class RecipeRepositoryImpl(
         localDataSource.insertMealsFavorite(meals.toFavoriteEntity())
     }
 
-    override suspend fun getRecipeDetail(i: String): Flow<MealDetail?> = flow {
-        try {
-            remoteDataSourceImpl.getRecipeDetail(i).collect { response ->
-                if (response.isSuccess) {
-                    val mealDetailDto = response.getOrNull()
+    override fun getRecipeDetail(i: String): Flow<Resource<MealDetail?>> {
+        return object : NetworkBoundResource<MealDetail?, MealsItemDto>() {
 
-                    if (mealDetailDto != null) {
-                        emit(mealDetailDto.toMealDetail())
+            override suspend fun fetchFromNetwork(): Flow<MealsItemDto> {
+                return remoteDataSourceImpl.getRecipeDetail(i).map { response ->
+                    if (response.isSuccess) {
+                        val data = response.getOrNull()
+                        data ?: throw IllegalStateException("Data is empty")
                     } else {
-                        Log.d(TAG, "getRecipeDetail: Data is empty")
-                        throw IllegalStateException("Data is empty")
+                        throw response.exceptionOrNull() ?: Exception("An error occurred. Please try again.")
                     }
-                } else {
-                    Log.e(TAG, "getRecipeDetail: ${response.exceptionOrNull()}")
-                    throw response.exceptionOrNull() ?: throw Exception("An error occurred. Please try again.")
                 }
             }
 
+            override suspend fun saveNetworkResult(item: MealsItemDto) {
+                try {
+                    // Hapus data lama dan simpan data baru ke database
+                    localDataSource.deleteAllMealDetails()
+                    localDataSource.insertMealDetail(item.toDetailEntity())
+                    Log.d(TAG, "saveNetworkResult: Data saved for ID = $i")
+                } catch (e: Exception) {
+                    Log.e(TAG, "saveNetworkResult: Error saving to DB", e)
+                    throw e
+                }
+            }
 
-        } catch (e: TimeoutCancellationException) {
-            Log.e(TAG, "getRecipeDetail: Request timed out", e)
-            throw TimeoutException("Request timed out. Please try again.")
-        } catch (e: UnknownHostException){
-            Log.e(TAG, "getRecipeDetail: No internet connection", e)
-            throw IOException("No internet connection. Please check your connection.")
-        } catch (e: IOException) {
-            Log.e(TAG, "getRecipeDetail: IOException", e)
-            throw IOException("An error occurred. Please try again.")
-        } catch (e: Exception) {
-            Log.e(TAG, "getRecipeDetail: Unexpected error", e)
-            throw Exception(e.message)
-        }
+            override fun loadFromDb(): Flow<MealDetail?> {
+                return flow {
+                    // Ambil data dari database berdasarkan ID
+                    val mealDetail = localDataSource.getMealDetailById(i).first()?.toDomain()
+                    emit(mealDetail)
+                }.catch { e ->
+                    // Tangani error saat loading dari database
+                    Log.e(TAG, "loadFromDb: Error loading from DB", e)
+                    emit(null)
+                }
+            }
+
+            override fun shouldFetch(data: MealDetail?): Boolean {
+                // Fetch hanya jika data di database kosong atau ID berubah
+                val shouldFetch = data == null || i != data.idMeal
+                Log.d(TAG, "shouldFetch: Data is null = ${data == null}, ID changed = ${i != data?.idMeal}")
+                return shouldFetch
+            }
+        }.asFlow()
     }
 
     override suspend fun deleteMealFavorite(meal: Meal) {
@@ -169,8 +190,7 @@ class RecipeRepositoryImpl(
         }
     }
 
-
-    companion object{
+    companion object {
         const val TAG = "RecipeRepositoryImpl"
     }
 }

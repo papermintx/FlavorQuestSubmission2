@@ -23,6 +23,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+        buildConfigField("String", "URL", "\"www.themealdb.com\"")
 
         buildConfigField("String", "BASE_URL", "\"https://www.themealdb.com/\"")
     }
