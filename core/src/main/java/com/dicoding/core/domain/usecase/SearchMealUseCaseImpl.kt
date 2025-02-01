@@ -34,8 +34,4 @@ class SearchMealUseCaseImpl(
                 }
             }
     }.flowOn(Dispatchers.IO)
-
-    companion object {
-        private const val TAG = "SearchMealUseCaseImpl"
-    }
 }

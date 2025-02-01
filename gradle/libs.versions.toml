@@ -22,9 +22,6 @@ playServicesBasement = "18.5.0"
 googleFonts = "1.7.7"
 featureDeliveryKtx = "2.1.0"
 datastorePreferences = "1.1.2"
-securePreferencesLib = "0.1.7"
-securityCrypto = "1.1.0-alpha06"
-tinkAndroid = "1.8.0"
 androidDatabaseSqlcipher = "4.5.4"
 sqliteKtx = "2.4.0"
 lifecycleRuntimeTesting = "2.8.7"
@@ -32,7 +29,6 @@ lifecycleRuntimeTesting = "2.8.7"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
-androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -77,8 +73,6 @@ navigation-compose = { module = "androidx.navigation:navigation-compose", versio
 androidx-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "googleFonts" }
 
 #youtube video player
-secure-preferences-lib = { module = "com.scottyab:secure-preferences-lib", version.ref = "securePreferencesLib" }
-tink-android = { module = "com.google.crypto.tink:tink-android", version.ref = "tinkAndroid" }
 youtube-video-player={module ="com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender",version="0.28"}
 
 

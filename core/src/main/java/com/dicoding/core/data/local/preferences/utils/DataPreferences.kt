@@ -1,7 +1,6 @@
 package com.dicoding.core.data.local.preferences.utils
 
 import android.content.Context
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 

@@ -89,11 +89,6 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.inline)
 
-    // Security
-    implementation(libs.androidx.security.crypto)
-    implementation(libs.secure.preferences.lib)
-    implementation(libs.tink.android)
-
     // Encryption Database
     implementation(libs.android.database.sqlcipher)
     implementation(libs.androidx.sqlite.ktx)

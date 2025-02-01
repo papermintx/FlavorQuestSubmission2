@@ -2,7 +2,6 @@ package com.dicoding.core.data.local.room.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.ColumnInfo
 
 @Entity(tableName = "mealsDetail")
 data class MealDetailEntity(

@@ -16,7 +16,7 @@ class SettingsViewModel @Inject constructor(
     private val updateThemeModeUseCase: UpdateThemeModeUseCase
 ): ViewModel() {
 
-    private val _themeMode = MutableStateFlow<Boolean>(false)
+    private val _themeMode = MutableStateFlow(false)
     val themeMode = _themeMode.asStateFlow()
 
     init {

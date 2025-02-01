@@ -6,7 +6,6 @@
     <string name="add_favorite">Add to Favorite</string>
     <string name="dynamic_not_found">Dynamic feature not found</string>
     <string name="ok">OK</string>
-    <string name="favorite">Favorite</string>
     <string name="loading">Loading…</string>
     <string name="thumbnail_of">Thumbnail of</string>
     <string name="error">Error</string>
@@ -28,7 +27,6 @@
     <string name="about_update_info">
         This app is regularly updated with new recipes and improvements. Stay tuned for upcoming features and updates.
     </string>
-    <string name="contact_support_button">Contact Support</string>
     <string name="contact_support_email">
         For any issues or questions, you can contact support via email: muhamadmuslih720@gmail.com
     </string>
