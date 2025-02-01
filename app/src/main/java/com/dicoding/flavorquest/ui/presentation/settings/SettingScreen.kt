@@ -38,7 +38,7 @@ fun SettingScreen(
         topBar = {
             TopAppBar(
                 title = { Text(
-                    "Settings",
+                    stringResource(id = R.string.settings),
                     color = MaterialTheme.colorScheme.onPrimary
                 ) },
                 colors = TopAppBarDefaults.topAppBarColors(

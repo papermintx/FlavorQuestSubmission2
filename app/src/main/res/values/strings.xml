@@ -11,7 +11,7 @@
     <string name="thumbnail_of">Thumbnail of</string>
     <string name="error">Error</string>
     <string name="search">Search</string>
-    <string name="no_data">No Data</string>
+    <string name="no_data">No Recipe Found</string>
     <string name="about_title">About this App</string>
     <string name="about_description">
         This app is a free recipe finder designed to help you discover new recipes from various cuisines around the world. Whether you\'re looking for breakfast ideas, lunch inspirations, or dinner recipes, this app has got you covered.
@@ -36,4 +36,6 @@
     <string name="delete_button">Delete</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="drawer">Drawer</string>
+    <string name="detail_screen">Detail Screen</string>
+    <string name="settings">Settings</string>
 </resources>

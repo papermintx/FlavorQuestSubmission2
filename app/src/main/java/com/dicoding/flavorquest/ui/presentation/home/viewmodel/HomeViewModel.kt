@@ -40,9 +40,6 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.ResetError -> {
                 resetSearchError()
             }
-            is HomeEvent.FetchInitialMeals -> {
-                fetchInitialMeals()
-            }
         }
     }
 

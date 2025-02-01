@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.dicoding.core.data.local.preferences.repository.UserPreferencesRepositoryImpl
+import com.dicoding.core.data.local.preferences.utils.EncryptionHelper
 import com.dicoding.core.data.local.preferences.utils.userPreferences
 import com.dicoding.core.domain.contract.repository.UserPreferencesRepository
 import dagger.Module
@@ -28,6 +29,6 @@ object DataStoreModule {
     fun provideUserPreferencesRepository(
         dataStore: DataStore<Preferences>
     ): UserPreferencesRepository {
-        return UserPreferencesRepositoryImpl(dataStore)
+        return UserPreferencesRepositoryImpl(dataStore, EncryptionHelper.generateSecretKey())
     }
 }

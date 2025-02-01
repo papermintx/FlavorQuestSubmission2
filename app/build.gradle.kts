@@ -62,7 +62,6 @@ dependencies {
     implementation(libs.feature.delivery.ktx)
     implementation(libs.androidx.lifecycle.runtime.testing)
     testImplementation(libs.junit)
-    testImplementation(libs.junit.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

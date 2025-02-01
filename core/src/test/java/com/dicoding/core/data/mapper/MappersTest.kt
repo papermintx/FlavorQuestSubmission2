@@ -1,5 +1,6 @@
 package com.dicoding.core.data.mapper
 
+import com.dicoding.core.data.local.room.entity.MealDetailEntity
 import com.dicoding.core.data.local.room.entity.MealEntity
 import com.dicoding.core.data.local.room.entity.MealFavoriteEntity
 import com.dicoding.core.data.remote.response.MealsItemDto
@@ -138,5 +139,56 @@ class MappersTest {
         assertEquals("Main Course", meal.category)
         assertEquals("thumb_url", meal.thumbnail)
         assertEquals("American", meal.area)
+    }
+
+
+
+    @Test
+    fun testMealsItemDtoToDetailEntity() {
+        val dto = MealsItemDto(
+            idMeal = "1",
+            strMeal = "Chicken",
+            strCategory = "Main Course",
+            strMealThumb = "thumb_url",
+            strArea = "American",
+            strInstructions = "Cook it well",
+            strYoutube = "youtube_url",
+            strIngredient1 = "Chicken",
+            strMeasure1 = "1 kg"
+        )
+        val entity = dto.toDetailEntity()
+        assertEquals("1", entity.id)
+        assertEquals("Chicken", entity.name)
+        assertEquals("Main Course", entity.category)
+        assertEquals("thumb_url", entity.thumbnail)
+        assertEquals("American", entity.area)
+        assertEquals("Cook it well", entity.instructions)
+        assertEquals("youtube_url", entity.youtubeLink)
+        assertEquals(listOf("Chicken"), entity.ingredients)
+        assertEquals(listOf("1 kg"), entity.measures)
+    }
+
+    @Test
+    fun testMealDetailEntityToDomain() {
+        val entity = MealDetailEntity(
+            id = "1",
+            name = "Chicken",
+            category = "Main Course",
+            area = "American",
+            thumbnail = "thumb_url",
+            instructions = "Cook it well",
+            youtubeLink = "youtube_url",
+            ingredients = listOf("Chicken"),
+            measures = listOf("1 kg")
+        )
+        val detail = entity.toDomain()
+        assertEquals("1", detail.idMeal)
+        assertEquals("Chicken", detail.strMeal)
+        assertEquals("Main Course", detail.strCategory)
+        assertEquals("thumb_url", detail.strMealThumb)
+        assertEquals("American", detail.strArea)
+        assertEquals("Cook it well", detail.strInstructions)
+        assertEquals("youtube_url", detail.strYoutube)
+        assertEquals(listOf("Chicken" to "1 kg"), detail.ingredientsWithMeasures)
     }
 }

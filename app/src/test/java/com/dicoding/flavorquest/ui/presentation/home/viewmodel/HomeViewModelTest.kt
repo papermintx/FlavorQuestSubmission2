@@ -30,11 +30,10 @@ class HomeViewModelTest {
 
     @Test
     fun fetchInitialMeals_success() = runTest {
-        homeViewModel = HomeViewModel(searchMealUseCase, getAllMealInitialUseCase)
         val meals = listOf(Meal("1", "Chicken", "Main Course", "thumb_url", "American"))
         val expectedState = State.Success(meals)
         `when`(getAllMealInitialUseCase()).thenReturn(flowOf(expectedState))
-        homeViewModel.onEvent(HomeEvent.FetchInitialMeals)
+        homeViewModel = HomeViewModel(searchMealUseCase, getAllMealInitialUseCase)
 
         advanceUntilIdle()
 

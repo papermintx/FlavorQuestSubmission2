@@ -51,7 +51,6 @@ fun MealDetailScreen(
 
     LaunchedEffect(key1 = Unit) {
         viewmodel.onEvent(DetailEvent.GetDetail(id))
-
     }
 
 
@@ -60,7 +59,7 @@ fun MealDetailScreen(
             TopAppBar(
                 title = {
                     Text(
-                        state.data?.strMeal ?: "Detail Screen",
+                        state.data?.strMeal ?: stringResource(id = R.string.detail_screen),
                         style = MaterialTheme.typography.titleMedium,
                         color =  MaterialTheme.colorScheme.onPrimary
                     ) },

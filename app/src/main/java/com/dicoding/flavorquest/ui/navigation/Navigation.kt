@@ -1,5 +1,8 @@
 package com.dicoding.flavorquest.ui.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,10 +31,14 @@ fun Navigation(modifier: Modifier = Modifier) {
         startDestination = NavScreen.Splash.route,
         modifier = modifier
     ) {
-        composable(NavScreen.Home.route) {
+        composable(
+            NavScreen.Home.route,
+            enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }, animationSpec = tween(700)) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(700)) }
+        ) {
             HomeScreen(
                 goFavorite = {
-                    navController.navigate(NavScreen.Favorite.route){
+                    navController.navigate(NavScreen.Favorite.route) {
                         popUpTo(navController.graph.startDestinationId)
                     }
                 },
@@ -48,21 +55,28 @@ fun Navigation(modifier: Modifier = Modifier) {
         }
         composable(
             NavScreen.Detail.route,
-            arguments = listOf(navArgument(NavArgument.ID_MEAL) { type = NavType.StringType })
+            arguments = listOf(navArgument(NavArgument.ID_MEAL) { type = NavType.StringType }),
+            enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }, animationSpec = tween(700)) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(700)) }
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getString(NavArgument.ID_MEAL)
 
             MealDetailScreen(id = id ?: "") {
                 navController.popBackStack()
             }
-
         }
         composable(
-            route = NavScreen.About.route
-        ){
+            route = NavScreen.About.route,
+            enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }, animationSpec = tween(700)) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(700)) }
+        ) {
             AboutScreen()
         }
-        composable(route = NavScreen.Favorite.route) {
+        composable(
+            route = NavScreen.Favorite.route,
+            enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }, animationSpec = tween(700)) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(700)) }
+        ) {
             val favoriteViewModel = hiltViewModel<FavoriteViewModel>()
             val state by favoriteViewModel.state.collectAsState()
             DFFavoriteScreen(
@@ -70,25 +84,30 @@ fun Navigation(modifier: Modifier = Modifier) {
                 onclick = {
                     navController.navigate(NavScreen.Detail.createRoute(it))
                 },
-                onError = {},
+                onError = {
+                    navController.popBackStack()
+                },
                 onDelete = {
                     favoriteViewModel.deleteFavorite(it)
                 }
             )
         }
-
         composable(
-            NavScreen.Settings.route
-        ){
+            NavScreen.Settings.route,
+            enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }, animationSpec = tween(700)) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(700)) }
+        ) {
             SettingScreen()
         }
         composable(
-            NavScreen.Splash.route
+            NavScreen.Splash.route,
+            enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }, animationSpec = tween(700)) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }, animationSpec = tween(700)) }
         ) {
             SplashScreen(
                 goHome = {
-                    navController.navigate(NavScreen.Home.route){
-                        popUpTo(NavScreen.Splash.route){
+                    navController.navigate(NavScreen.Home.route) {
+                        popUpTo(NavScreen.Splash.route) {
                             inclusive = true
                         }
                         launchSingleTop = true

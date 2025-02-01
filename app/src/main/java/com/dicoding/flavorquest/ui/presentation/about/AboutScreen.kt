@@ -20,11 +20,11 @@ import com.dicoding.flavorquest.R
 @Composable
 fun AboutScreen(modifier: Modifier = Modifier) {
 
-    Scaffold { innerpadding ->
+    Scaffold { innerPadding ->
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(innerpadding)
+                .padding(innerPadding)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center

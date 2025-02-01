@@ -94,7 +94,7 @@ dependencies {
     implementation(libs.secure.preferences.lib)
     implementation(libs.tink.android)
 
-//    // Enkripsi Database
+    // Encryption Database
     implementation(libs.android.database.sqlcipher)
     implementation(libs.androidx.sqlite.ktx)
 

@@ -31,7 +31,7 @@ class RecipeRepositoryImpl(
 
             override suspend fun fetchFromNetwork(): Flow<List<MealsItemDto>> {
                 Log.d(TAG, "fetchFromNetwork: $s")
-                currentQuery = s // Set currentQuery ke query baru
+                currentQuery = s // Set currentQuery to the new query
 
                 return remoteDataSourceImpl.searchRecipes(s).map { response ->
                     Log.d(TAG, "fetchFromNetwork: response: $response")
@@ -50,7 +50,7 @@ class RecipeRepositoryImpl(
                 try {
                     localDataSource.deleteAllMeals()
                     localDataSource.insertMeals(item.map { it.toDomain().toEntity() })
-                    // Jika save berhasil, update lastSuccessfulQuery
+                    // If save is successful, update lastSuccessfulQuery
                     lastSuccessfulQuery = currentQuery
                     Log.d(TAG, "saveNetworkResult: lastSuccessfulQuery updated to $lastSuccessfulQuery")
                 } catch (e: Exception) {
@@ -70,6 +70,7 @@ class RecipeRepositoryImpl(
             }
 
             override fun shouldFetch(data: List<Meal?>?): Boolean {
+                // Fetch if data is null/empty or the query has changed
                 val shouldFetch = data.isNullOrEmpty() || s != lastSuccessfulQuery
                 Log.d(TAG, "shouldFetch: Data is null or empty = ${data.isNullOrEmpty()}, Query changed = ${s != lastSuccessfulQuery}")
                 return shouldFetch
@@ -116,7 +117,7 @@ class RecipeRepositoryImpl(
             }
 
             override fun shouldFetch(data: List<Meal?>?): Boolean {
-                // Fetch hanya jika data di database kosong
+                // Fetch only if the database is empty
                 val shouldFetch = data.isNullOrEmpty()
                 Log.d(TAG, "shouldFetch: Data is null or empty = $shouldFetch")
                 return shouldFetch
@@ -150,7 +151,7 @@ class RecipeRepositoryImpl(
 
             override suspend fun saveNetworkResult(item: MealsItemDto) {
                 try {
-                    // Hapus data lama dan simpan data baru ke database
+                    // Delete old data and save new data to the database
                     localDataSource.deleteAllMealDetails()
                     localDataSource.insertMealDetail(item.toDetailEntity())
                     Log.d(TAG, "saveNetworkResult: Data saved for ID = $i")
@@ -162,18 +163,18 @@ class RecipeRepositoryImpl(
 
             override fun loadFromDb(): Flow<MealDetail?> {
                 return flow {
-                    // Ambil data dari database berdasarkan ID
+                    // Load data from the database by ID
                     val mealDetail = localDataSource.getMealDetailById(i).first()?.toDomain()
                     emit(mealDetail)
                 }.catch { e ->
-                    // Tangani error saat loading dari database
+                    // Handle errors when loading from the database
                     Log.e(TAG, "loadFromDb: Error loading from DB", e)
                     emit(null)
                 }
             }
 
             override fun shouldFetch(data: MealDetail?): Boolean {
-                // Fetch hanya jika data di database kosong atau ID berubah
+                // Fetch only if the database is empty or the ID has changed
                 val shouldFetch = data == null || i != data.idMeal
                 Log.d(TAG, "shouldFetch: Data is null = ${data == null}, ID changed = ${i != data?.idMeal}")
                 return shouldFetch

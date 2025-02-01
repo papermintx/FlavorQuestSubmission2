@@ -7,7 +7,7 @@ object MealDataGenerator {
 
     fun generateDummyMealDto(): MealsResponseDto {
         val meals = mutableListOf<MealsItemDto?>()
-        val mealNames = listOf("Chicken Curry", "Beef Stew", "Vegetable Stir Fry", "Spaghetti Bolognese", "Fish Tacos")
+        val mealNames = listOf("Chicken Curry", "Beef Stew", "Vegetable Stir Fry", "Spaghetti Bologna", "Fish Tacos")
 
         mealNames.forEachIndexed { index, name ->
             meals.add(

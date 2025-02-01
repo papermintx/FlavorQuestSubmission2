@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -83,15 +84,16 @@ fun FavoriteScreen(
                             Card(
                                 modifier = Modifier.align(Alignment.TopEnd),
                                 colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.onSurface
+                                    containerColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f)
                                 )
                             ) {
                                 IconButton(
+                                    modifier = Modifier.size(38.dp),
                                     onClick = {
                                         onDelete(meal)
                                     }
                                 ) {
-                                    Icon(Icons.Default.Delete, tint = Color.Red, contentDescription = stringResource(id =R.string.delete_button))
+                                    Icon(Icons.Default.Delete, tint = Color.Red.copy(alpha = 0.8f), contentDescription = stringResource(id =R.string.delete_button))
                                 }
                             }
                         }

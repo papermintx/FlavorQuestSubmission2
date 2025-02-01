@@ -23,64 +23,54 @@ val poppinsFamily = FontFamily(
 )
 
 val AppFonts = Typography(
-    // Judul besar atau headline utama (misalnya di layar beranda atau judul utama halaman)
     headlineLarge = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 32.sp // Ukuran untuk headline besar
+        fontSize = 32.sp
     ),
-    // Judul subheading atau secondary title
     headlineMedium = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 24.sp // Ukuran untuk headline atau subheading
+        fontSize = 24.sp
     ),
-    // Judul medium untuk elemen lebih kecil
     titleLarge = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 22.sp // Ukuran judul besar untuk    bagian penting
+        fontSize = 22.sp
     ),
-    // Ukuran judul untuk bagian atau elemen yang lebih kecil
     titleMedium = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp // Judul sedang
+        fontSize = 20.sp
     ),
-    // Ukuran judul kecil
     titleSmall = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 16.sp // Judul kecil
+        fontSize = 16.sp
     ),
-    // Ukuran teks paragraf utama atau teks konten biasa
     bodyLarge = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp // Teks utama yang digunakan di sebagian besar body text
+        fontSize = 16.sp
     ),
-    // Body text ukuran menengah
     bodyMedium = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp // Ukuran body text standar
+        fontSize = 14.sp
     ),
-    // Body text kecil, untuk keterangan tambahan atau teks di bawah
     bodySmall = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp // Ukuran body kecil
+        fontSize = 12.sp
     ),
-    // Untuk caption atau label kecil di bawah elemen UI
     labelSmall = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.Light,
-        fontSize = 10.sp // Ukuran teks sangat kecil, untuk keterangan atau caption
+        fontSize = 10.sp
     ),
-    // Teks yang digunakan pada tombol
     labelLarge = TextStyle(
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 14.sp // Ukuran untuk teks tombol atau aksi
+        fontSize = 14.sp
     )
 )

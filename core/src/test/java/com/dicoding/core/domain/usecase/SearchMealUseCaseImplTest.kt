@@ -33,7 +33,7 @@ class UseCaseTest {
     }
 
     @Test
-    fun search_succes() = runTest {
+    fun search_success() = runTest {
         // Arrange
         val query = "Chicken"
         val meals = listOf(Meal(id = "1", name = "Chicken Soup", category = "Soup", thumbnail = "thumb_url", area = "American"))
