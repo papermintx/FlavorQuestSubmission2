@@ -24,14 +24,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
-            isDebuggable = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         debug {
-            enableAndroidTestCoverage = true
-            enableUnitTestCoverage = true
-            isMinifyEnabled = false
-            isDebuggable = true
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }

@@ -56,3 +56,5 @@
 # Keep Moshi-generated JsonAdapter classes
 -keep class *JsonAdapter { *; }
 
+
+
