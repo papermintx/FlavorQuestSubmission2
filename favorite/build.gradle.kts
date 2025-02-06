@@ -37,9 +37,8 @@ android {
 dependencies {
     // Dagger Hilt
     implementation(libs.dagger.hilt)
-    testImplementation(libs.junit.junit)
-    testImplementation(libs.junit.junit)
-    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit)
+
     ksp(libs.dagger.ksp)
 
     implementation(libs.dagger)

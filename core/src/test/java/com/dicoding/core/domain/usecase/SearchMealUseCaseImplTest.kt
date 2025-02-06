@@ -4,86 +4,103 @@ import com.dicoding.core.common.State
 import com.dicoding.core.data.Resource
 import com.dicoding.core.domain.contract.repository.RecipeRepository
 import com.dicoding.core.domain.model.Meal
-import com.dicoding.core.utils.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 @ExperimentalCoroutinesApi
-class UseCaseTest {
+class SearchMealUseCaseImplTest {
 
-    private lateinit var useCase: SearchMealUseCaseImpl
-    private var repository: RecipeRepository = mock()
+    @Mock
+    private lateinit var repository: RecipeRepository
 
-    @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
+    private lateinit var searchMealUseCase: SearchMealUseCaseImpl
 
     @Before
     fun setUp() {
-        useCase = SearchMealUseCaseImpl(repository)
         MockitoAnnotations.openMocks(this)
+        searchMealUseCase = SearchMealUseCaseImpl(repository)
+    }
+
+
+    @Test
+    fun `invoke should emit success state when repository returns success`() = runTest {
+        val query = "test"
+        val meals = MealDummyData.getMeals()
+        val resource : Resource<List<Meal?>> = Resource.Success(meals)
+
+        `when`(repository.searchRecipes(query)).thenReturn(flow {
+            emit(
+                resource
+            )
+        })
+
+        val result = searchMealUseCase(query).toList()
+
+        assertEquals(State.Success(meals), result[0])
     }
 
     @Test
-    fun search_success() = runTest {
-        // Arrange
-        val query = "Chicken"
-        val meals = listOf(Meal(id = "1", name = "Chicken Soup", category = "Soup", thumbnail = "thumb_url", area = "American"))
-        Mockito.`when`(repository.searchRecipes(query)).thenReturn(flow {
-            emit(Resource.Loading())
-            emit(Resource.Success(meals))
+    fun `invoke should emit error state when repository returns error`() = runTest {
+        val query = "test"
+        val exception = Exception("An error occurred")
+        val errorMessage = "An error occurred"
+        val resource : Resource<List<Meal?>> = Resource.Error(exception, null)
+
+        `when`(repository.searchRecipes(query)).thenReturn(flow {
+            emit(resource)
         })
 
-        // Act
-        val result = useCase(query).toList()
+        val result = searchMealUseCase(query).toList()
 
-        // Assert
-        assertEquals(result.size, 2)
-        assertEquals(State.Loading, result[0])
-        assertEquals(State.Success(meals), result[1])
+        assertEquals(State.Error(errorMessage), result[0])
     }
 
     @Test
-    fun search_failed() = runTest {
-        // Arrange
-        val query = "Chicken"
-        val errorMessage = "Network error"
-        val exception = Exception(errorMessage)
-        Mockito.`when`(repository.searchRecipes(query)).thenReturn(flow {
-            emit(Resource.Loading())
-            emit(Resource.Error(exception))
+    fun `invoke should emit error state when repository returns empty success`() = runTest {
+        val query = "test"
+        val resource : Resource<List<Meal?>> = Resource.Success(emptyList())
+        `when`(repository.searchRecipes(query)).thenReturn(flow {
+            emit(resource)
         })
 
-        // Act
-        val result = useCase(query).toList()
+        val result = searchMealUseCase(query).toList()
 
-        // Assert
-        assertEquals(State.Loading, result[0])
-        assertEquals(State.Error(errorMessage), result[1])
+        assertEquals(State.Error("the recipe you are looking for does not exist"), result[0])
     }
+}
 
-    @Test
-    fun search_empty() = runTest {
-        // Arrange
-        val query = "Chicken"
-        Mockito.`when`(repository.searchRecipes(query)).thenReturn(flow {
-            emit(Resource.Loading())
-            emit(Resource.Success(emptyList<Meal>()))
-        })
-
-        // Act
-        val result = useCase(query).toList()
-
-        // Assert
-        assertEquals(State.Loading, result[0])
-        assertEquals(State.Error("the recipe you are looking for does not exist"), result[1])
+object MealDummyData {
+    fun getMeals(): List<Meal> {
+        return listOf(
+            Meal(
+                id = "1",
+                name = "Meal1",
+                category = "Category1",
+                thumbnail = "Thumbnail1",
+                area = "Area1"
+            ),
+            Meal(
+                id = "2",
+                name = "Meal2",
+                category = "Category2",
+                thumbnail = "Thumbnail2",
+                area = "Area2"
+            ),
+            Meal(
+                id = "3",
+                name = "Meal3",
+                category = "Category3",
+                thumbnail = "Thumbnail3",
+                area = "Area3"
+            )
+        )
     }
 }

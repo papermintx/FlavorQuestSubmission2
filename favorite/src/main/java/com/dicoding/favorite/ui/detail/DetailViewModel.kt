@@ -1,24 +1,5 @@
 package com.dicoding.favorite.ui.detail
 
-import android.content.Context
-import android.widget.Toast
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.dicoding.core.common.State
-import com.dicoding.core.data.mapper.toMeal
-import com.dicoding.core.domain.contract.usecase.GetMealDetailUseCase
-import com.dicoding.core.domain.contract.usecase.InsertFavoriteMealUseCase
-import com.dicoding.core.domain.model.Meal
-import com.dicoding.core.domain.model.MealDetail
-import com.dicoding.flavorquest.common.StateUi
-import com.dicoding.flavorquest.ui.presentation.detail.viewmodel.DetailEvent
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 //
 //@HiltViewModel
 //class DetailMealViewModel @Inject constructor(

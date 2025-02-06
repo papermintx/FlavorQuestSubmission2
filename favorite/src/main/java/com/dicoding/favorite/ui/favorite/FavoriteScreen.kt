@@ -35,7 +35,6 @@ import com.dicoding.flavorquest.ui.presentation.home.components.LoadingDialog
 import com.dicoding.flavorquest.ui.presentation.home.components.MealItem
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Suppress("unused")
 @Composable
 fun FavoriteScreen(
     state: StateUi<List<Meal>>,

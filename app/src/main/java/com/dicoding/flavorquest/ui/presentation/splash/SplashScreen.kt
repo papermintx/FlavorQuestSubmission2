@@ -40,7 +40,7 @@ fun SplashScreen(modifier: Modifier = Modifier, goHome: () -> Unit) {
                 ) {
 
                     CircularProgressIndicator(
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.padding(16.dp)
                             .size(80.dp)
                     )
@@ -48,7 +48,7 @@ fun SplashScreen(modifier: Modifier = Modifier, goHome: () -> Unit) {
                     Text(
                         text = "FlavorQuest",
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.padding(16.dp)
                     )
                 }
