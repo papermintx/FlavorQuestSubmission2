@@ -60,7 +60,7 @@ fun HomeScreen(
             ModalDrawerSheet {
                 Image(
                     painter = painterResource(R.drawable.image),
-                    contentDescription = "App icon",
+                    contentDescription = stringResource(id = R.string.app_name),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp),
@@ -104,13 +104,14 @@ fun HomeScreen(
             modifier = modifier,
             floatingActionButton = {
                 FloatingActionButton(
-                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
+                    containerColor = MaterialTheme.colorScheme.primary,
                     onClick = {
                         goFavorite()
                     }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Favorite,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                         contentDescription = null
                     )
                 }
@@ -185,7 +186,7 @@ fun HomeScreen(
                         LazyColumn(
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            items(state.data!!) { meal ->
+                            items(state.data!!, key = {it.id}) { meal ->
                                 MealItem(meal = meal, modifier = Modifier.clickable {
                                     goDetail(meal.id)
                                 })

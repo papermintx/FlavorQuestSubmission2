@@ -1,17 +1,17 @@
-package com.dicoding.flavorquest.ui.presentation.favorite.viewmodel
+package com.dicoding.favorite.ui.favorite
 
 import com.dicoding.core.common.State
 import com.dicoding.core.domain.contract.usecase.DeleteMealFavoriteUseCase
 import com.dicoding.core.domain.contract.usecase.GetAllFavoriteUseCase
 import com.dicoding.core.domain.model.Meal
-import com.dicoding.flavorquest.utils.MainDispatcherRule
+import com.dicoding.favorite.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Rule
+
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify

@@ -21,5 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "FlavorQuest"
 include(":app")
-include(":core")
 include(":favorite")
+include(":core")

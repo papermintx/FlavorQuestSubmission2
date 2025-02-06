@@ -1,4 +1,4 @@
-package com.dicoding.favorite
+package com.dicoding.favorite.ui.favorite
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -27,12 +27,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dicoding.core.domain.model.Meal
-import com.dicoding.favorite.components.EmptyState
+import com.dicoding.favorite.ui.favorite.component.EmptyState
+import com.dicoding.favorite.R
 import com.dicoding.flavorquest.common.StateUi
 import com.dicoding.flavorquest.ui.presentation.home.components.ErrorDialog
 import com.dicoding.flavorquest.ui.presentation.home.components.LoadingDialog
 import com.dicoding.flavorquest.ui.presentation.home.components.MealItem
-import com.dicoding.flavorquest.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Suppress("unused")
@@ -93,7 +93,7 @@ fun FavoriteScreen(
                                         onDelete(meal)
                                     }
                                 ) {
-                                    Icon(Icons.Default.Delete, tint = Color.Red.copy(alpha = 0.8f), contentDescription = stringResource(id =R.string.delete_button))
+                                    Icon(Icons.Default.Delete, tint = Color.Red.copy(alpha = 0.8f), contentDescription = stringResource(id = R.string.delete_button))
                                 }
                             }
                         }

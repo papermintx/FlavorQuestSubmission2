@@ -1,4 +1,4 @@
-package com.dicoding.flavorquest.ui.presentation.favorite.viewmodel
+package com.dicoding.favorite.ui.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

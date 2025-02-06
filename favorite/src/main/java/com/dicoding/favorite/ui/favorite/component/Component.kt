@@ -1,4 +1,4 @@
-package com.dicoding.favorite.components
+package com.dicoding.favorite.ui.favorite.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

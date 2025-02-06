@@ -4,4 +4,5 @@ sealed interface SettingEvent {
     data class UpdateThemeMode(
         val isDarkMode: Boolean
     ) : SettingEvent
+    data object GetThemeMode : SettingEvent
 }

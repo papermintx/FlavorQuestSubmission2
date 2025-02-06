@@ -9,8 +9,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class GetAllInitialMealImplUseCase(
+class GetAllInitialMealImplUseCase @Inject constructor(
     private val repository: RecipeRepository
 ) : GetAllMealInitialUseCase {
     override suspend operator fun invoke(): Flow<State<List<Meal?>>> {

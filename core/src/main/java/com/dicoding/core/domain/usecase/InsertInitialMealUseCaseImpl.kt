@@ -7,9 +7,10 @@ import com.dicoding.core.domain.contract.usecase.InsertInitialMealUseCase
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
-class InsertInitialMealUseCaseImpl(
+class InsertInitialMealUseCaseImpl @Inject constructor(
     private val repository: RecipeRepository
 ) : InsertInitialMealUseCase {
     override suspend fun invoke() {
