@@ -140,9 +140,9 @@ class RecipeRepositoryImplTest {
         val result = repository.getRecipeDetail(mealId).toList()
 
         // Assert
-        assertTrue(result[0] is Resource.Loading)
-        assertTrue(result[1] is Resource.Error)
-        assertEquals(exception.message, (result[1] as Resource.Error).message)
+        assertTrue(result[0] is Resource.Loading) // State pertama harus Loading
+        assertTrue(result[1] is Resource.Error) // State kedua harus Error
+        assertEquals(exception.message, (result[1] as Resource.Error).message) // Pesan error harus sesuai
     }
 
     @Test

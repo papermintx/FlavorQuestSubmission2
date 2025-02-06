@@ -51,3 +51,4 @@
 -keep class com.dicoding.core.di.** { *; }
 -keep class com.dicoding.core.data.** { *; }
 -keep class com.dicoding.core.domain.** { *; }
+

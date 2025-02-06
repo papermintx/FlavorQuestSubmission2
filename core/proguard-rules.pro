@@ -54,3 +54,14 @@
 -keep class com.dicoding.core.domain.usecase.GetThemeModeUseCaseImpl { *; }
 -keep class com.dicoding.core.domain.usecase.SearchMealUseCaseImpl { *; }
 -keep class com.dicoding.core.domain.usecase.UpdateThemeModeUseCaseImpl { *; }
+
+-keep class com.dicoding.core.data.local.room.entity.** { *; }
+-keep class com.dicoding.core.data.mapper.** { *; }
+-keep class com.dicoding.core.data.repository.** { *; }
+
+-keep class com.dicoding.core.data.Resource { *; }
+-keep class com.dicoding.core.data.Resource$Success { *; }
+-keep class com.dicoding.core.data.Resource$Error { *; }
+-keep class com.dicoding.core.data.Resource$Loading { *; }
+-keep class com.dicoding.core.data.NetworkBoundResource { *; }
+-keep class com.dicoding.core.common.State { *; }

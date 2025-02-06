@@ -52,6 +52,7 @@ class DetailMealViewModelTest {
 
         assertNotNull(state)
         assertEquals(false, state.isLoading)
+        advanceUntilIdle()
         assertEquals(mealDetail, state.data)
         assertEquals(Pair(false, ""), state.error)
     }
@@ -67,7 +68,8 @@ class DetailMealViewModelTest {
         val state = detailMealViewModel.state.value
         assertNotNull(state)
         assertEquals(false, state.isLoading)
-        assertEquals(true, state.error.first)
+        advanceUntilIdle()
+        assertEquals(Pair(true, "Network Error"), state.error)
         assertEquals("Network Error", state.error.second)
     }
 
