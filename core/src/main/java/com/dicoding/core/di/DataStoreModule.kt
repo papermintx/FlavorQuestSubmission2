@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.dicoding.core.data.local.preferences.repository.UserPreferencesRepositoryImpl
-import com.dicoding.core.data.local.preferences.utils.EncryptionHelper
+import com.dicoding.core.data.local.preferences.utils.KeyStoreHelper
 import com.dicoding.core.data.local.preferences.utils.userPreferences
 import com.dicoding.core.domain.contract.repository.UserPreferencesRepository
 import dagger.Module
@@ -12,6 +12,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.crypto.SecretKey
 import javax.inject.Singleton
 
 @Module
@@ -24,11 +25,18 @@ object DataStoreModule {
         return context.userPreferences
     }
 
+    @Provides
+    @Singleton
+    fun provideSecretKey(): SecretKey {
+        return KeyStoreHelper.getOrCreateSecretKey()
+    }
+
     @Singleton
     @Provides
     fun provideUserPreferencesRepository(
-        dataStore: DataStore<Preferences>
+        dataStore: DataStore<Preferences>,
+        secretKey: SecretKey
     ): UserPreferencesRepository {
-        return UserPreferencesRepositoryImpl(dataStore, EncryptionHelper.generateSecretKey())
+        return UserPreferencesRepositoryImpl(dataStore,  secretKey)
     }
 }
