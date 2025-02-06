@@ -39,3 +39,6 @@
 -keep class com.dicoding.core.common.State$* { *; }
 
 -keep class com.dicoding.core.domain.usecase.** { *; }
+
+# Keep all classes in the test package (adjust package name as needed)
+-keep class com.dicoding.flavorquest.test.** { *; }
