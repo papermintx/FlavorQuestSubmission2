@@ -40,5 +40,14 @@
 
 -keep class com.dicoding.core.domain.usecase.** { *; }
 
-# Keep all classes in the test package (adjust package name as needed)
--keep class com.dicoding.flavorquest.test.** { *; }
+
+# Keep Mockito core classes
+-keep class org.mockito.** { *; }
+
+# Keep Kotlin coroutines test classes
+-keep class kotlinx.coroutines.test.** { *; }
+
+# Keep AndroidX core testing classes
+-keep class androidx.test.core.** { *; }
+-keep class androidx.test.ext.junit.** { *; }
+-keep class androidx.test.runner.** { *; }
