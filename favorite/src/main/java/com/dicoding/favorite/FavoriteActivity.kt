@@ -5,9 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.dicoding.core.domain.contract.usecase.GetThemeModeUseCase
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dicoding.favorite.di.DaggerFavoriteComponent
 import com.dicoding.favorite.di.ViewModelFactory
 import com.dicoding.favorite.ui.favorite.FavoriteViewModel
@@ -15,6 +14,7 @@ import com.dicoding.favorite.ui.navigation.Navigation
 import com.dicoding.flavorquest.di.FavoriteModuleDependencies
 import com.dicoding.flavorquest.ui.presentation.detail.viewmodel.DetailMealViewModel
 import com.dicoding.flavorquest.ui.theme.FlavorQuestTheme
+import com.dicoding.flavorquest.ui.theme.ThemeViewModel
 import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
@@ -24,9 +24,7 @@ class FavoriteActivity : ComponentActivity() {
     lateinit var factory: ViewModelFactory
     private val viewModel: FavoriteViewModel by viewModels { factory }
     private val detailViewModel: DetailMealViewModel by viewModels { factory }
-
-    @Inject
-    lateinit var getThemeModeUseCase: GetThemeModeUseCase
+    private val themeViewModel: ThemeViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +41,7 @@ class FavoriteActivity : ComponentActivity() {
             .inject(this)
         enableEdgeToEdge()
         setContent {
-            val isDarkTheme by getThemeModeUseCase().collectAsState(initial = false)
-
+            val isDarkTheme by themeViewModel.isDarkMode.collectAsStateWithLifecycle(initialValue = false)
             FlavorQuestTheme(darkTheme = isDarkTheme) {
                 Navigation(
                     favoriteViewModel = viewModel,
@@ -55,5 +52,6 @@ class FavoriteActivity : ComponentActivity() {
             }
         }
     }
+
 }
 

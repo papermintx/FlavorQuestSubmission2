@@ -4,26 +4,25 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.collectAsState
+import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
-import com.dicoding.core.domain.contract.usecase.GetThemeModeUseCase
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dicoding.flavorquest.ui.navigation.Navigation
 import com.dicoding.flavorquest.ui.theme.FlavorQuestTheme
+import com.dicoding.flavorquest.ui.theme.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var getThemeModeUseCase: GetThemeModeUseCase
+    private  val viewModel: ThemeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         setContent {
-            val isDarkTheme by getThemeModeUseCase().collectAsState(initial = false)
+            val isDarkTheme by viewModel.isDarkMode.collectAsStateWithLifecycle(initialValue = false)
             FlavorQuestTheme(darkTheme = isDarkTheme) {
                 Navigation()
             }
