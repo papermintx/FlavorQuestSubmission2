@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dicoding.favorite.di.DaggerFavoriteComponent
 import com.dicoding.favorite.di.ViewModelFactory
@@ -27,8 +27,6 @@ class FavoriteActivity : ComponentActivity() {
     private val themeViewModel: ThemeViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         DaggerFavoriteComponent.builder()
             .context(this)
             .appDependencies(
@@ -39,10 +37,11 @@ class FavoriteActivity : ComponentActivity() {
             )
             .build()
             .inject(this)
+        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val isDarkTheme by themeViewModel.isDarkMode.collectAsStateWithLifecycle(initialValue = false)
-            FlavorQuestTheme(darkTheme = isDarkTheme) {
+            val isDarkTheme = rememberUpdatedState(newValue = themeViewModel.isDarkMode.collectAsStateWithLifecycle().value)
+            FlavorQuestTheme(darkTheme = isDarkTheme.value) {
                 Navigation(
                     favoriteViewModel = viewModel,
                     detailViewModel = detailViewModel

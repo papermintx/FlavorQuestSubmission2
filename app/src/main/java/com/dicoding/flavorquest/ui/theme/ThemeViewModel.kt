@@ -6,6 +6,7 @@ import com.dicoding.core.domain.contract.usecase.GetThemeModeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,9 +24,10 @@ class ThemeViewModel @Inject constructor(
 
     private fun getThemeMode() {
         viewModelScope.launch {
-            getThemeModeUseCase().collect {
+            getThemeModeUseCase().collectLatest {
                 _isDarkMode.value = it
             }
         }
     }
+
 }
