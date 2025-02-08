@@ -59,5 +59,4 @@ class RemoteDataSourceImpl(
             Result.failure(Exception("Response not successful: ${response.code()}"))
         }
     }
-
 }
