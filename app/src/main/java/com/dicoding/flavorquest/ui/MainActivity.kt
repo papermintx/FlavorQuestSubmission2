@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dicoding.flavorquest.ui.navigation.Navigation
@@ -22,7 +21,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val viewModel: ThemeViewModel  = hiltViewModel()
-            val isDarkTheme by rememberUpdatedState(newValue = viewModel.isDarkMode.collectAsStateWithLifecycle().value)
+            val isDarkTheme by viewModel.isDarkMode.collectAsStateWithLifecycle()
             FlavorQuestTheme(darkTheme = isDarkTheme) {
                 Navigation()
             }
